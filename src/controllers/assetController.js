@@ -20,22 +20,23 @@ exports.fileuploaded = [
         }
         else
         {
-            broker.sendRPCMessage({file : req.file}, 'uploadasset').then((result)=>{
-                var obj = JSON.parse(result.toString('utf8'));
-                if (!obj.success)
-                {
-                    if (obj.error)
-                        return res.status(500).json(obj);
-                    else
-                    {
-                        res.status(404).json(obj);
-                    }
-                }
-                else
-                {
-                    res.status(200).json(wrapUser(obj.data));
-                }
-            });
+            // broker.sendRPCMessage({file : req.file}, 'uploadasset').then((result)=>{
+            //     var obj = JSON.parse(result.toString('utf8'));
+            //     if (!obj.success)
+            //     {
+            //         if (obj.error)
+            //             return res.status(500).json(obj);
+            //         else
+            //         {
+            //             res.status(404).json(obj);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         res.status(200).json(wrapUser(obj.data));
+            //     }
+            // });
+            res.status(200).json({'success' : true});
         }
     }
 ]

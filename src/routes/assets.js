@@ -15,5 +15,5 @@ var router = express.Router();
 var assetController = require('../controllers/assetController');
 var auth = require('../controllers/auth');
 
-router.post("/upload", auth.verifyToken, upload.single('file'), assetController.fileuploaded);
+router.post("/upload", upload.single('file'), assetController.fileuploaded);
 module.exports = router;
