@@ -37,6 +37,7 @@ exports.fileuploaded = [
             //     }
             // });
             console.log(req.file);
+            req.file.url = "/blobs/" + req.file.filename;
             res.status(200).json({'success' : true, "file" : req.file});
         }
     }
