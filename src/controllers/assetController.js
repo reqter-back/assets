@@ -36,7 +36,8 @@ exports.fileuploaded = [
             //         res.status(200).json(wrapUser(obj.data));
             //     }
             // });
-            res.status(200).json({'success' : true});
+            console.log(req.file);
+            res.status(200).json({'success' : true, "file" : req.file});
         }
     }
 ]
