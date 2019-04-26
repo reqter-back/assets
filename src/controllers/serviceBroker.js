@@ -41,9 +41,11 @@ function whenConnected() {
           }
           ch.on("error", function(err) {
           console.error("[AMQP] channel error", err.message);
+          return setTimeout(this.startconnect, 1000);
           });
           ch.on("close", function() {
           console.log("[AMQP] channel closed");
+          return setTimeout(this.startconnect, 1000);
           });
           // create an event emitter where rpc responses will be published by correlationId
           ch.responseEmitter = new EventEmitter();
