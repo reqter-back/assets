@@ -3,7 +3,7 @@ const uuidv4 = require('uuid/v4');
 var EventEmitter = require('events');
 
 const REPLY_QUEUE = 'amq.rabbitmq.reply-to';
-var rabbitHost = process.env.RABBITMQ_HOST || "amqp://fwhebseo:Q3Ft5NUyFNBniua53p_bV8u-w3KVfmsK @wildboar.rmq.cloudamqp.com/fwhebseo ";
+var rabbitHost = process.env.RABBITMQ_HOST || "amqp://fwhebseo:Q3Ft5NUyFNBniua53p_bV8u-w3KVfmsK@wildboar.rmq.cloudamqp.com/fwhebseo ";
 //var rabbitHost = process.env.RABBITMQ_HOST || "amqp://localhost:15672";
 
 var amqpConn = null;
