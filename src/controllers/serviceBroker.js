@@ -3,7 +3,8 @@ const uuidv4 = require('uuid/v4');
 var EventEmitter = require('events');
 
 const REPLY_QUEUE = 'amq.rabbitmq.reply-to';
-var rabbitHost = process.env.RABBITMQ_HOST || "amqp://gvgeetrh:6SyWQAxDCpcdg1S0Dc-Up0sUxfmBUVZU@chimpanzee.rmq.cloudamqp.com/gvgeetrh";
+var rabbitHost = process.env.RABBITMQ_HOST || "amqp://fwhebseo:Q3Ft5NUyFNBniua53p_bV8u-w3KVfmsK @wildboar.rmq.cloudamqp.com/fwhebseo ";
+//var rabbitHost = process.env.RABBITMQ_HOST || "amqp://localhost:15672";
 
 var amqpConn = null;
 function startconnect(){
@@ -11,7 +12,7 @@ function startconnect(){
   amqp.connect(rabbitHost, (err, conn)=>{
     if (err) {
       console.error("[AMQP]", err.message);
-      return setTimeout(startconnect, 1000);
+      //return setTimeout(startconnect, 1000);
     }
     conn.on("error", function(err) {
       if (err.message !== "Connection closing") {
@@ -20,7 +21,7 @@ function startconnect(){
     });
     conn.on("close", function() {
       console.error("[AMQP] reconnecting");
-      return setTimeout(start, 1000);
+      //return setTimeout(start, 1000);
     });
 
     console.log("[AMQP] connected");
