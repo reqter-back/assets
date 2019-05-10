@@ -12,7 +12,7 @@ function startconnect(){
   amqp.connect(rabbitHost, (err, conn)=>{
     if (err) {
       console.error("[AMQP]", err.message);
-      //return setTimeout(startconnect, 1000);
+      return setTimeout(startconnect, 1000);
     }
     conn.on("error", function(err) {
       if (err.message !== "Connection closing") {
@@ -38,15 +38,15 @@ function whenConnected() {
   amqpConn.createChannel( (err, ch) => {
       if (err) {
           console.error("[AMQP]", err.message);
-          return setTimeout(this.startconnect, 1000);
+          //return setTimeout(this.startconnect, 1000);
           }
           ch.on("error", function(err) {
           console.error("[AMQP] channel error", err.message);
-          return setTimeout(this.startconnect, 1000);
+          //return setTimeout(this.startconnect, 1000);
           });
           ch.on("close", function() {
           console.log("[AMQP] channel closed");
-          return setTimeout(this.startconnect, 1000);
+          //return setTimeout(this.startconnect, 1000);
           });
           // create an event emitter where rpc responses will be published by correlationId
           ch.responseEmitter = new EventEmitter();
