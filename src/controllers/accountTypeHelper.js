@@ -48,6 +48,7 @@ function getFreeUserStorage(req, file)
     var storage = multerS3({
         s3: s3,
         bucket: process.env.AWS_BUCKETNAME || "caas",
+        acl : "public-read",
         metadata: function (req, file, cb) {
           cb(null, {fieldName: file.fieldname});
         },
@@ -70,6 +71,7 @@ function getAdvancedUserStorage(req, file)
     var storage = multerS3({
         s3: s3,
         bucket: "reqter",
+        acl : "public-read",
         metadata: function (req, file, cb) {
           cb(null, {fieldName: file.fieldname});
         },
