@@ -1,19 +1,9 @@
 var express = require('express');
-var multer  = require('multer')
-var disk = require('../storages/diskStorage');
-var s3 = require('../storages/s3Storage');
-var config = require('../config');
-
-var storage = undefined;
-if (config.storageType == "disk")
-    storage = disk;
-else
-    storage = s3;
-var upload = multer({ storage : storage})
+var helper = require('../controllers/accountTypeHelper');
 
 var router = express.Router();
 var assetController = require('../controllers/assetController');
 var auth = require('../controllers/auth');
 
-router.post("/upload", upload.single('file'), assetController.fileuploaded);
+router.post("/upload", auth.verifyToken, helper.upload, assetController.fileuploaded);
 module.exports = router;

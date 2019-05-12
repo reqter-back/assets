@@ -1,10 +1,9 @@
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 const broker = require('./serviceBroker');
-
+var path = require('path');
 exports.fileuploaded = [
     (req, res, next) =>{
-        console.log(JSON.stringify(req.file));
         if (req.file === undefined || req.file == null)
         {
             //There is no avatar in the request
@@ -36,9 +35,16 @@ exports.fileuploaded = [
             //         res.status(200).json(wrapUser(obj.data));
             //     }
             // });
-            console.log(req.file);
-            req.file.url = "/blobs/" + req.file.filename;
-            res.status(200).json({'success' : true, "file" : req.file});
+            var out = {
+                "fieldname": req.file.fieldname,
+                "originalname": req.file.originalname,
+                "encoding": req.file.encoding,
+                "mimetype": req.file.mimetype,
+                "size": req.file.size,
+                "filename": req.file.key + path.extname(req.file.originalname),
+                "url": req.file.location
+            };
+            res.status(200).json({'success' : true, "file" : out});
         }
     }
 ]
