@@ -3,7 +3,7 @@ var disk = require('../storages/diskStorage');
 var config = require('../config');
 var multerS3 = require('multer-s3')
 var aws = require('aws-sdk');
-
+var path = require('path');
 
 exports.upload = (req, res, next)=>
 {
@@ -52,7 +52,8 @@ function getFreeUserStorage(req, file)
           cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
-          cb(null, Date.now().toString())
+          var p = path.extname(file.originalname.toString());
+          cb(null, file.fieldname + '-' + Date.now().toString() + p)
         }
       });
       return storage;
