@@ -54,7 +54,7 @@ function getFreeUserStorage(req, file)
         },
         key: function (req, file, cb) {
           var p = path.extname(file.originalname.toString());
-          cb(null, file.fieldname + '-' + Date.now().toString() + p)
+          cb(null, req.userId + "/" + file.fieldname + '-' + Date.now().toString() + p)
         }
       });
       return storage;
