@@ -42,7 +42,7 @@ exports.fileuploaded = [
                 "mimetype": req.file.mimetype,
                 "size": req.file.size,
                 "filename": req.file.key,
-                "url": req.file.path ? req.file.path : req.file.location
+                "url": req.file.path ? req.file.filename : req.file.location
             };
             res.status(200).json({'success' : true, "file" : out});
         }
