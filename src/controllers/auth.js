@@ -10,7 +10,7 @@ function verifyToken(req, res, next) {
     }
     // if (!token || token == null)
     //   return res.status(403).send({ auth: false, message: 'No token provided.' });
-    if (token && token != null)
+    if (token && token != null && token.length > 0)
     {
       jwt.verify(token, config.secret, function(err, decoded) {
         if (err)
