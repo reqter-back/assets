@@ -4,27 +4,35 @@ var config = require('../config');
 var multerS3 = require('multer-s3')
 var aws = require('aws-sdk');
 var path = require('path');
+var db = require('../storages/dbstorage');
 
 exports.upload = (req, res, next)=>
 {
     var storage = undefined;
-    if (config.storageType == "disk")
-        storage = disk;
-    else
+
+    switch (config.storageType)
     {
-        switch(req.account_type)
-        {
-            default :
-            case "free" : 
-            storage = getFreeUserStorage(req);
-            break;
-            case "advanced" : 
-            storage = getAdvancedUserStorage(req);
-            break;
-            case "premium" : 
-            storage = getPremiumUserStorage(req);
-            break;
-        }
+      case "disk" : 
+        storage = disk;
+      break;
+      case "database":
+        storage = db;
+        break;
+      case "aws" :
+          switch(req.account_type)
+          {
+              default :
+              case "free" : 
+              storage = getFreeUserStorage(req);
+              break;
+              case "advanced" : 
+              storage = getAdvancedUserStorage(req);
+              break;
+              case "premium" : 
+              storage = getPremiumUserStorage(req);
+              break;
+          }
+        break;
     }
     var upload = multer({storage : storage});
     const singleUpload = upload.single('file');
