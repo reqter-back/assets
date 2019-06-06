@@ -19,4 +19,5 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/asset', asset);
+app.use('/blobs', express.static('uploads'))
 module.exports = app;
