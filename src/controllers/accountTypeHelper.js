@@ -5,10 +5,12 @@ var multerS3 = require('multer-s3')
 var aws = require('aws-sdk');
 var path = require('path');
 var db = require('../storages/dbstorage');
-
+var mongodb = require('mongodb');
+const fs = require('fs');
+var assetController = require('./assetController');
+var storage = undefined;
 exports.upload = (req, res, next)=>
 {
-    var storage = undefined;
 
     switch (config.storageType)
     {
@@ -45,6 +47,46 @@ exports.upload = (req, res, next)=>
       });
 }
 
+exports.download = (req, res, next)=>
+{
+    var storage = undefined;
+    switch (config.storageType)
+    {
+      case "disk" : 
+        storage = disk;
+      break;
+      case "database":
+        storage = db;
+        const bucket = new mongodb.GridFSBucket(db.db, {
+          chunkSizeBytes: 1024
+        });
+        
+        bucket.openDownloadStreamByName(req.params.filename).
+          pipe(res).
+          on('error', function(error) {
+            assert.ifError(error);
+          }).
+          on('finish', function() {
+            console.log('done!');
+          });
+        break;
+      case "aws" :
+          switch(req.account_type)
+          {
+              default :
+              case "free" : 
+              storage = getFreeUserStorage(req);
+              break;
+              case "advanced" : 
+              storage = getAdvancedUserStorage(req);
+              break;
+              case "premium" : 
+              storage = getPremiumUserStorage(req);
+              break;
+          }
+        break;
+    }
+}
 function getFreeUserStorage(req, file)
 {
     aws.config.update({

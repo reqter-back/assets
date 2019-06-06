@@ -19,22 +19,7 @@ exports.fileuploaded = [
         }
         else
         {
-            // broker.sendRPCMessage({file : req.file}, 'uploadasset').then((result)=>{
-            //     var obj = JSON.parse(result.toString('utf8'));
-            //     if (!obj.success)
-            //     {
-            //         if (obj.error)
-            //             return res.status(500).json(obj);
-            //         else
-            //         {
-            //             res.status(404).json(obj);
-            //         }
-            //     }
-            //     else
-            //     {
-            //         res.status(200).json(wrapUser(obj.data));
-            //     }
-            // });
+            console.log(req.file)
             var out = {
                 "fieldname": req.file.fieldname,
                 "originalname": req.file.originalname,
@@ -84,5 +69,17 @@ exports.batchfileuploaded = [
                 }
             });
         }
+    }
+]
+
+exports.batchfileuploaded = [
+    (req, res, next) =>{
+        if (req.file === undefined || req.file == null)
+        {
+            //There is no avatar in the request
+            res.status(400).json({"success" : false, "error" : "File not found"});
+            return;
+        }
+        res.sendFile(req.file.path);
     }
 ]
