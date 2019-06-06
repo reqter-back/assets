@@ -6,5 +6,5 @@ var assetController = require('../controllers/assetController');
 var auth = require('../controllers/auth');
 
 router.post("/upload", auth.verifyToken, helper.upload, assetController.fileuploaded);
-router.get("/blobs/:filename", auth.verifyToken, helper.download);
+router.get("/download/:filename", auth.verifyToken, helper.download);
 module.exports = router;
