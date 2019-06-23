@@ -60,15 +60,29 @@ exports.download = (req, res, next)=>
         const bucket = new mongodb.GridFSBucket(db.db, {
           chunkSizeBytes: 1024
         });
+        bucket.find({filename : req.params.filename}).toArray(function(err, files){
+            if (err)
+              res.status(400).send(err);
+            else
+            {
+              console.log(files);
+              if (files.length == 0)
+              {
+                res.status(404).send("not_found");
+                return;
+              }
+              res.setHeader("Content-Type", files[0]["contentType"]);
+              bucket.openDownloadStreamByName(req.params.filename).
+              pipe(res).
+              on('error', function(error) {
+                assert.ifError(error);
+              }).
+              on('finish', function() {
+                console.log('done!');
+              });
+                }
+        });
         
-        bucket.openDownloadStreamByName(req.params.filename).
-          pipe(res).
-          on('error', function(error) {
-            assert.ifError(error);
-          }).
-          on('finish', function() {
-            console.log('done!');
-          });
         break;
       case "aws" :
           switch(req.account_type)
