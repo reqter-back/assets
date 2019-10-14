@@ -11,8 +11,9 @@ storage = new GridFSStorage({
   cache: true,
   file: (req, file) => {
     console.log(file);
-    var p = path.extname(file.originalname.toString());
 
+    var p = path.extname(file.originalname.toString());
+    if (p == ".jpg" || p == ".jpeg") file.mimetype = "image/jpg";
     return file.fieldname + "-" + Date.now() + p;
   }
 });
