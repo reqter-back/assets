@@ -3,7 +3,7 @@ var path = require("path");
 var fs = require("fs");
 var MongoClient = require("mongodb");
 var url =
-  process.env.FileDB_URL ||
+  process.env.FILEDB_URL ||
   "mongodb://fakhrad:logrezaee24359@ds231537.mlab.com:31537/files";
 var storage = undefined;
 storage = new GridFSStorage({
